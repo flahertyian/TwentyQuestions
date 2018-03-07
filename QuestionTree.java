@@ -9,28 +9,28 @@ public class QuestionTree {
    //Pre: 
    //Post:
    public Question Tree(UserInterface ui) {
-   
+
       totalGames = 0;
       gamesWon = 0;
-   
+      overallRoot = new QuestionNode("Computer");
    }
    
    //Pre: 
    //Post: 
    public void play() {
-   
+      
    }
    
    //Pre: 
    //Post:
    public void save(PrintStream output) {
-   
+      saver(output, overallRoot);
    }
    
    //Pre: 
    //Post:
    public void load(Scanner input) {
-      loader(input);      
+      loader(input, overallRoot);      
    }
    
    //Post: Returns value of totalGames
@@ -43,19 +43,33 @@ public class QuestionTree {
       return gamesWon;
    }
    
-   //Note: presently garbled
-   //Pre: 
+   //Pre: Untested
    //Post:
-   private QuestionNode loader(Scanner input) {
-      if (input.nextLine()) {
-         return null;
-      } else if () {
-         
-      }
+   private void saver(PrintStream output, QuestionNode input) {
+      output.println(input.data);
+      saver(output, root.left);
+      saver(output, root.left);
    }
    
-   private void add(String q, String a, boolean r, QuestionNode root) {
+   //Pre: Untested
+   //Post:
+   private QuestionNode loader(Scanner input, QuestionNode root) {
+      if (!input.hasNext()) return null;
       
+      String line = input.nextLine();
+      
+      if (root == null) root = new QuestionNode(line);
+      
+      if (line.charAt(0) == 'Q') {
+         root.left = loader(input, root.left);
+         root.right = loader(input, root.right);
+      }
+      
+      return root;
+   }
+   
+   private QuestionNode add() {
+   
    }
 
 }
