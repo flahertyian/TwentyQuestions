@@ -30,7 +30,7 @@ public class QuestionTree {
    //Pre: 
    //Post:
    public void load(Scanner input) {
-      loader(input);      
+      loader(input, overallRoot);      
    }
    
    //Post: Returns value of totalGames
@@ -46,11 +46,17 @@ public class QuestionTree {
    //Note: presently garbled
    //Pre: 
    //Post:
-   private QuestionNode loader(Scanner input) {
-      if (input.nextLine()) {
-         return null;
-      } else if () {
-         
+   private QuestionNode loader(Scanner input, QuestionNode current) {
+      String[] dev = input.nextLine().split(":");
+      if(dev[0].equals("A")){
+         return new QuestionNode(dev[1]);
+      }
+      if(current == null&& current==overallRoot){ //if root node and not initalized
+         current = loader(input, new QuestionNode(dev[1]));
+      } else {
+         current.left= loader(input, new QuestionNode(dev[1])); //yes
+         dev = input.nextLine().split(":");
+         current.right= loader(input, new QuestionNode(dev[1])); //no
       }
    }
    
