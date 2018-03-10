@@ -8,7 +8,7 @@ public class QuestionTree {
    
    //Pre: 
    //Post:
-   public Question Tree(UserInterface ui) {
+   public QuestionTree(UserInterface ui) {
 
       totalGames = 0;
       gamesWon = 0;
