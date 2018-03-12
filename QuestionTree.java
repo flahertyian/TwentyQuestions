@@ -115,7 +115,7 @@ public class QuestionTree {
       QuestionNode temp = root;
       String que = "Q:" + q;
       String ans = "A:" + a;
-      QuestionNode newTerm = new QuestionNosde(ans);
+      QuestionNode newTerm = new QuestionNode(ans);
       if (d) {
          root = new QuestionNode(que, newTerm, temp);
       } else {
