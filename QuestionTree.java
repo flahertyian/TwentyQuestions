@@ -35,7 +35,7 @@ public class QuestionTree {
    
    //
    //Pre: overallRoot is initalized
-   //Post: totalGames is incremented, and overallRoot now contains the contence of a game
+   //Post: totalGames is incremented, and overallRoot now contains the contents of a game
    //calls player private helper method.
    public void play() {
       totalGames++;
