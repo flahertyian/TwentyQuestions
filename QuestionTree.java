@@ -1,3 +1,16 @@
+/**
+QuestionTree
+Ian Flaherty , Mike McGinn
+3/11/18
+CS145 C
+
+This program is designed to organize QuestionNode objects into a Tree of nodes so that they can represent
+questions and answers in the 20 questions game. This object allows for the saving of a tree structure in 
+a text file, and for the user to play a game with a tree generated from this file.  
+*/
+
+
+
 import java.util.*;
 import java.io.*;
 
@@ -8,8 +21,9 @@ public class QuestionTree {
    private QuestionNode overallRoot;
    private UserInterface u;
    
-   //Pre: 
-   //Post:
+   // Constructor takes in a user interface object.
+   // if User Interface is null throws a IllegalArguementException. 
+   // initalizes totalGames, gamesWon, overallRoot, userInterface
    public QuestionTree(UserInterface ui) {
       if (ui == null) throw new IllegalArgumentException("Method passed null parameter");
       
@@ -20,23 +34,25 @@ public class QuestionTree {
    }
    
    //
-   //Pre: 
-   //Post: 
+   //Pre: overallRoot is initalized
+   //Post: totalGames is incremented, and overallRoot now contains the contence of a game
+   //calls player private helper method.
    public void play() {
       totalGames++;
       overallRoot = player(overallRoot);     
    }
    
-   //Pre: 
-   //Post:
+   //if the printSteam is null throws an IllegalArguementException
+   //Pre: overallRoot is not null
+   //calls saver private helper method
    public void save(PrintStream output) {
       if (output == null) throw new IllegalArgumentException("Method passed null parameter");
       
       saver(output, overallRoot);
    }
    
-   //Pre: 
-   //Post:
+   // if scanner input object is null thows IllegalArguementException
+   // calls loader private helper method.
    public void load(Scanner input) {
       if (input == null) throw new IllegalArgumentException("Method passed null parameter");
       
@@ -44,18 +60,24 @@ public class QuestionTree {
       overallRoot = loader(input, overallRoot);      
    }
    
-   //Post: Returns value of totalGames
+   //Pre: totalGames is initalized
+   //Post: Returns int value of totalGames
    public int totalGames() {
       return totalGames;
    }
    
-   //Post: Returns value of gamesWon
+   //Pre: gamesWon is initalized 
+   //Post: Returns int value of gamesWon
    public int gamesWon() {
       return gamesWon;
    }
    
-   //Pre:
-   //Post:
+   //Pre: Tree/QuestionNode root is not null
+   //Post: will have a tree that represents the user input
+   //------------------------------------------------------
+   //player is the main function that handles user input.
+   //player also modifies the tree by calling the adder method. 
+   //returns a QuestionNode 
    private QuestionNode player(QuestionNode root) {
       
       String s = root.data.substring(2);
@@ -83,16 +105,16 @@ public class QuestionTree {
       return root;
    }
    
-   //Pre: Untested
-   //Post:
+   //Pre: the tree is not null 
+   //Post: the contents of the tree are now represented in the output file  
    private void saver(PrintStream output, QuestionNode root) {      
       output.println(root.data);
       if (root.left != null) saver(output, root.left);
       if (root.right != null) saver(output, root.right);
    }
    
-   //Pre: Worked in test, needs load() to clear overallRoot first
-   //Post:
+   //Pre: the input file is not empty
+   //Post: the tree is initalized with the contents of the input file
    private QuestionNode loader(Scanner input, QuestionNode root) {
       if (!input.hasNext()) return null;
       
@@ -108,9 +130,9 @@ public class QuestionTree {
       return root;
    }
    
-//    Do after player()
-//    Pre:
-//    Post: 
+   //Pre: the tree is already initalized
+   //Post: the tree has been updated to reflect a new question/answer added by the user.
+   //returns a QuestionNode
    private QuestionNode adder(String q, String a, boolean d, QuestionNode root) {
       QuestionNode temp = root;
       String que = "Q:" + q;
