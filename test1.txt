@@ -1,0 +1,7 @@
+Q:Is it an animal?
+A:cat
+Q:Does it go on your feet?
+A:shoe
+Q:Is it a food?
+A:gumbo
+A:computer

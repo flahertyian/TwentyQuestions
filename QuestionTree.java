@@ -6,7 +6,7 @@ public class QuestionTree {
    private int totalGames;
    private int gamesWon;
    private QuestionNode overallRoot;
-   private UserInterface ui;
+   private UserInterface u;
    
    //Pre: 
    //Post:
@@ -16,7 +16,7 @@ public class QuestionTree {
       totalGames = 0;
       gamesWon = 0;
       overallRoot = new QuestionNode("A:computer");
-      this.ui = ui;
+      u = ui;
    }
    
    //
@@ -60,20 +60,21 @@ public class QuestionTree {
       
       String s = root.data.substring(2);
       if (root.data.charAt(0) == 'A') {
-          ui.print("Would your object happen to be " + s + "?");
-          if(ui.nextBoolean()) {
+          u.print("Would your object happen to be " + s + "?");
+          if(u.nextBoolean()) {
             gamesWon++;
           } else {
-            ui.println("I lose.  What is your object? ");
-            String a = ui.nextLine();
-            ui.println("Type a yes/no question to distinguish your item from " + s + ": ");
-            String q = ui.nextLine();
-            ui.println("What is the answer for your object? ");
-            boolean d = ui.nextBoolean();
+            u.println("I lose.  What is your object? ");
+            String a = u.nextLine();
+            u.println("Type a yes/no question to distinguish your item from " + s + ": ");
+            String q = u.nextLine();
+            u.println("What is the answer for your object? ");
+            boolean d = u.nextBoolean();
             return adder(q, a, d, root);
           }
       } else {
-         if(ui.nextBoolean()) {
+         u.print(root.data);
+         if(u.nextBoolean()) {
             root.left = player(root.left);
          } else {
             root.right = player(root.right);
@@ -114,7 +115,7 @@ public class QuestionTree {
       QuestionNode temp = root;
       String que = "Q:" + q;
       String ans = "A:" + a;
-      QuestionNode newTerm = new QuestionNode(ans);
+      QuestionNode newTerm = new QuestionNosde(ans);
       if (d) {
          root = new QuestionNode(que, newTerm, temp);
       } else {
