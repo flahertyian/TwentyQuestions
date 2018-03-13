@@ -1,3 +1,9 @@
+// QuestionTree
+// Ian Flaherty
+// Michael McGinn
+// 3/11/18
+// CS145 C
+
 //For use with QuestionTree and QuestionMain
 public class QuestionNode {
    
