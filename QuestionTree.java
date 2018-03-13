@@ -1,30 +1,33 @@
-/**
-QuestionTree
-Ian Flaherty , Mike McGinn
-3/11/18
-CS145 C
-
-This program is designed to organize QuestionNode objects into a Tree of nodes so that they can represent
-questions and answers in the 20 questions game. This object allows for the saving of a tree structure in 
-a text file, and for the user to play a game with a tree generated from this file.  
-*/
-
-
+// QuestionTree
+// Ian Flaherty
+// Michael McGinn
+// 3/11/18
+// CS145 C
+// 
+// This program implements a binary tree of QuestionNode objects to effect a game of Twenty Questions. This 
+// programs allows for the saving/load of a tree and the adding a new node if the user wins.  
 
 import java.util.*;
 import java.io.*;
 
 public class QuestionTree {
    
+   //Tracks total games
    private int totalGames;
+   
+   //Tracks games won by computer
    private int gamesWon;
+   
+   //Initial node
    private QuestionNode overallRoot;
+   
+   //Object passed from main for interaction with user interface
    private UserInterface u;
    
-   // Constructor takes in a user interface object.
-   // if User Interface is null throws a IllegalArguementException. 
-   // initalizes totalGames, gamesWon, overallRoot, userInterface
+   //Pre: Accepts UserInterface object.
+   //Post: Initializes object fields
    public QuestionTree(UserInterface ui) {
+      //Throws error if method parameter is null
       if (ui == null) throw new IllegalArgumentException("Method passed null parameter");
       
       totalGames = 0;
@@ -42,55 +45,51 @@ public class QuestionTree {
       overallRoot = player(overallRoot);     
    }
    
-   //if the printSteam is null throws an IllegalArguementException
-   //Pre: overallRoot is not null
-   //calls saver private helper method
+   //Pre: Accepts printstream object
+   //Post: Uses saver() to output tree to file
    public void save(PrintStream output) {
-      if (output == null) throw new IllegalArgumentException("Method passed null parameter");
-      
+      //Throws error if method parameter is null
+      if (output == null) throw new IllegalArgumentException("Method passed null parameter"); 
+         
       saver(output, overallRoot);
    }
    
-   // if scanner input object is null thows IllegalArguementException
-   // calls loader private helper method.
+   //Pre: Accepts scanner object
+   //Post: Uses loader() to build tree from file
    public void load(Scanner input) {
+      //Throws error if method parameter is null
       if (input == null) throw new IllegalArgumentException("Method passed null parameter");
       
       overallRoot = null;
       overallRoot = loader(input, overallRoot);      
    }
    
-   //Pre: totalGames is initalized
-   //Post: Returns int value of totalGames
+   //Post: Getter for totalGames
    public int totalGames() {
       return totalGames;
    }
    
-   //Pre: gamesWon is initalized 
-   //Post: Returns int value of gamesWon
+   //Post: Getter for gamesWon
    public int gamesWon() {
       return gamesWon;
    }
    
-   //Pre: Tree/QuestionNode root is not null
-   //Post: will have a tree that represents the user input
-   //------------------------------------------------------
-   //player is the main function that handles user input.
-   //player also modifies the tree by calling the adder method. 
-   //returns a QuestionNode 
+   //Pre: Accpets overallRoot from play()
+   //Post: Processes user interaction, calls adder() if player wins
    private QuestionNode player(QuestionNode root) {
       
       String s = root.data.substring(2);
+      
       if (root.data.charAt(0) == 'A') {
           u.print("Would your object happen to be " + s + "?");
           if(u.nextBoolean()) {
             gamesWon++;
           } else {
-            u.println("I lose.  What is your object? ");
+            u.print("I lose.  What is your object? ");
             String a = u.nextLine();
-            u.println("Type a yes/no question to distinguish your item from " + s + ": ");
+            u.print("Type a yes/no question to distinguish your item from " + s + ": ");
             String q = u.nextLine();
-            u.println("What is the answer for your object? ");
+            u.print("What is the answer for your object? ");
             boolean d = u.nextBoolean();
             return adder(q, a, d, root);
           }
@@ -105,45 +104,40 @@ public class QuestionTree {
       return root;
    }
    
-   //Pre: the tree is not null 
-   //Post: the contents of the tree are now represented in the output file  
+   //Pre: Accepts prinstream object and overallRoot in save().
+   //Post: Outputs tree to save file in pre-traversal order.  
    private void saver(PrintStream output, QuestionNode root) {      
       output.println(root.data);
       if (root.left != null) saver(output, root.left);
       if (root.right != null) saver(output, root.right);
    }
    
-   //Pre: the input file is not empty
-   //Post: the tree is initalized with the contents of the input file
+   //Pre: Accepts scanner object and current node from load(). Requires overallRoot 
+   //be set to null. Requires save file list tree nodes in pre-traversal order.
+   //Post: Tree is built from scanned in save file. Returns QuestionNode object. 
    private QuestionNode loader(Scanner input, QuestionNode root) {
       if (!input.hasNext()) return null;
       
       String line = input.nextLine();
       
       if (root == null) root = new QuestionNode(line);
-      
       if (line.charAt(0) == 'Q') {
          root.left = loader(input, root.left);
          root.right = loader(input, root.right);
       }
-      
       return root;
    }
    
-   //Pre: the tree is already initalized
-   //Post: the tree has been updated to reflect a new question/answer added by the user.
-   //returns a QuestionNode
+   //Pre: From player(), accepts current node and user inputted question, answer and answer-boolean. 
+   //Post: Adds and inserts new nodes to tree, returns QuestionNode. 
    private QuestionNode adder(String q, String a, boolean d, QuestionNode root) {
-      QuestionNode temp = root;
       String que = "Q:" + q;
       String ans = "A:" + a;
-      QuestionNode newTerm = new QuestionNode(ans);
       if (d) {
-         root = new QuestionNode(que, newTerm, temp);
+         root = new QuestionNode(que, new QuestionNode(ans), root);
       } else {
-         root = new QuestionNode(que, temp, newTerm);
+         root = new QuestionNode(que, root, new QuestionNode(ans));
       }
       return root;
    }
-
 }
