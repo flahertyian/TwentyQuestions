@@ -1,0 +1,31 @@
+Q:Can you eat or drink it?
+Q:Is it food?
+Q:Is it Cajun?
+Q:Is it a type of stew?
+A:Gumbo
+A:Dirty Rice
+Q:Is it a pasta dish?
+A:Pasta Arrabiata
+A:Pizza
+Q:Is it caffeinated?
+Q:Is it served hot?
+A:Black Coffee
+A:Red Bull
+Q:Is it calorie-free?
+A:La Croix
+A:Beer
+Q:Is it a consumer-good?
+Q:Is it electrical?
+Q:Is it commonly found in an office?
+A:Compputer
+A:Gazebo Lantern
+Q:Is it something you sit on?
+A:Lawn Chair
+A:Fish Tank
+Q:Is it a living, growing part of nature?
+Q:Is it typically bigger than a person?
+A:Tree
+A:Flower
+Q:Is it a mineral?
+A:Quartz
+A:Atmospheric Carbon
