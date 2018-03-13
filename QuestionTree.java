@@ -4,8 +4,7 @@
 // 3/11/18
 // CS145 C
 // 
-// This program implements a binary tree of QuestionNode objects to effect a game of Twenty Questions. This 
-// programs allows for the saving/load of a tree and the adding a new node if the user wins.  
+// This is a binary tree implementation of Twenty Questions with support for save/load and for learning new Q/As.  
 
 import java.util.*;
 import java.io.*;
@@ -24,8 +23,8 @@ public class QuestionTree {
    //Object passed from main for interaction with user interface
    private UserInterface u;
    
-   //Pre: Accepts UserInterface object.
-   //Post: Initializes object fields
+   //Pre: Accepts UserInterface object in main.
+   //Post: Initializes fields
    public QuestionTree(UserInterface ui) {
       //Throws error if method parameter is null
       if (ui == null) throw new IllegalArgumentException("Method passed null parameter");
@@ -36,7 +35,6 @@ public class QuestionTree {
       u = ui;
    }
    
-   //
    //Pre: overallRoot is initalized
    //Post: totalGames is incremented, and overallRoot now contains the contents of a game
    //calls player private helper method.
@@ -78,6 +76,7 @@ public class QuestionTree {
    //Post: Processes user interaction, calls adder() if player wins
    private QuestionNode player(QuestionNode root) {
       
+      //root.data's value with prefix trimmed
       String s = root.data.substring(2);
       
       if (root.data.charAt(0) == 'A') {
@@ -94,7 +93,7 @@ public class QuestionTree {
             return adder(q, a, d, root);
           }
       } else {
-         u.print(root.data);
+         u.print(s);
          if(u.nextBoolean()) {
             root.left = player(root.left);
          } else {
